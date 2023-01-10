@@ -11,6 +11,7 @@ const QuestionList = (props) => {
     useEffect( () => {
         const getQuestions = async () => {
             try {
+                console.log('calling api for getting questions')
                 const res = await axios.get("http://localhost:8080/questions")
                 console.log(res.data)
                 setQuestions(res.data)
@@ -32,7 +33,7 @@ const QuestionList = (props) => {
         <section className="ql-section">
             {
             questions.map(
-                (question) => (<Question key={question.id} question_title={question.title} question_body={question.question_text} author_name={question.author_name} />)
+                (question) => (<Question key={question.id} question_title={question.title} question_body={question.question_text} author_name={question.username} />)
             )}
         </section>
     )

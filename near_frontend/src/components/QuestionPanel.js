@@ -8,7 +8,6 @@ const QuestionPanel = (props) => {
         question_title: '',
         question_body: '',
         author_id: 4,
-        author_name: 'Ethereum Maxi'
     })
 
     const closeHandler = () => {
@@ -16,7 +15,6 @@ const QuestionPanel = (props) => {
             question_title: '',
             question_body: '',
             author_id: 4,
-            author_name: 'Ethereum Maxi'
         });
         props.handleqpVisible(false)
     };

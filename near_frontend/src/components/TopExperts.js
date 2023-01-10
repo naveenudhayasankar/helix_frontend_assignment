@@ -1,7 +1,6 @@
-import Avatar from '../resources/avatar.png'
-import UpvoteArrow from '../resources/upvote.png'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import TopExpert from './TopExpert';
 
 const TopExperts = () => {
     const [topExperts, setTopExperts] = useState([])
@@ -25,23 +24,11 @@ const TopExperts = () => {
                 <h2>
                     <span className="sidepnl-header"> Top Experts </span>
                 </h2>
-                <div className="experts-content">
-                    {topExperts.map(expert => (
-                    <div className="experts-row" key={expert.id}>
-                      <img className="experts-image" alt="Avatar" src={Avatar}/>
-                      <div className="experts-info" key={expert.id}>
-                          <span className="profile-name"> {expert.username} </span>
-                          <div className="expert-stats" key={expert.id}>
-                              <div className="upvotes-imgtxt" key={expert.id}>
-                                  <span className="upvotes-count"> {expert.upvotes} </span>
-                                  <img src={UpvoteArrow} alt="Upvotes" className="upvotes-img"/>
-                                  <span className="collected"> collected </span>
-                              </div>
-                          </div>
-                      </div>
-                    </div>  
+                <section className="experts-content">
+                    {topExperts.map((expert) => (
+                        <TopExpert key={expert.id} expert={expert} />
                     ))}
-                </div>
+                </section>
             </div>
         </section>
     );

@@ -39,7 +39,7 @@ app.get("/users", (req, res) => {
     }
     else
     {
-        const q = "SELECT username, upvotes FROM users ORDER BY upvotes DESC LIMIT 5"
+        const q = "SELECT id, username, upvotes FROM users ORDER BY upvotes DESC LIMIT 5"
         db.query(q, (err, data) => {
             if(err) { res.json("Error in retriving user data")}
             return res.json(data)
@@ -49,7 +49,7 @@ app.get("/users", (req, res) => {
 
 app.get("/questions", (req, res) => {
     if(req.body.author_id) {
-        const q = "SELECT title, question_text, author_name FROM questions WHERE author_id=" + mysql.escape(req.query.author_id)
+        const q = "SELECT title, question_text, username FROM questions WHERE author_id=" + mysql.escape(req.query.author_id)
         db.query(q, (err, data) => {
             if(err) {res.json("Error in retriving posted questions")}
             return res.json(data)
@@ -57,23 +57,22 @@ app.get("/questions", (req, res) => {
     }
     else
     {
-        const q = "SELECT title, question_text, author_id, author_name FROM questions ORDER BY updated DESC LIMIT 4"
+        const q = "SELECT q.title, q.question_text, a.username FROM questions AS q INNER JOIN users as a ON a.id = q.author_id ORDER BY q.updated DESC LIMIT 4"
         db.query(q, (err, data) => {
-            if(err) { res.json("Error in retriving posted questions")}
+            if(err) { res.json(err)}
             return res.json(data)
         })
     }
 });
 
 app.post("/questions", (req, res) => {
-    const q = "INSERT INTO questions (`title`, `question_text`, `author_id`, `author_name`) VALUES (?)";
+    console.log(req)
+    const q = "INSERT INTO questions (`title`, `question_text`, `author_id`) VALUES (?)";
     const values = [
         req.body.question_title,
         req.body.question_body,
         req.body.author_id,
-        req.body.author_name
-    ];
-
+    ];    
     db.query(q, [values], (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
